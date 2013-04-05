@@ -9,36 +9,10 @@ use Web::Query;
 use Encode;
 use Data::Dumper;
 use Time::Piece;
-#use Email::Sender::Simple qw(sendmail);
-#use Email::Simple;
-#use Data::Recursive::Encode;
-#use Encode;
 
 binmode STDIN,":encoding(UTF-8)";
 binmode STDOUT,":utf8";
 binmode STDERR,":utf8";
-
-#場所を投げたら、[場所 時間 時間 ...]の配列を返すサブルーチン
-#  my $tenroku = &getAkijikan('tenroku');
-#  my $kandai = &getAkijikan('kandai');
-#  
-#  my $bodytext;
-#  for my $item (@$tenroku){
-#      $bodytext .="$item\n";
-#  }
-#  
-#  my $bodytext .= "\n";
-#  for my $item(@$kandai){
-#      $body .= "$item\n";
-#  }
-
-#スタジオ公式ページよりデータを取得
-#sub new{
-#    my $class = shift;
-#    my $ARRAY = @_;
-#    return bress \@ARRAY,$class;
-#}
-
 
 sub getAkijikan{
     my $place = shift;
@@ -50,7 +24,6 @@ sub getAkijikan{
         $nowstr = $1.$2.$3;
     };
     my $urlString = 'http://yoyaku.bassontop.jp/'.$place.'/index.cgi?date='.$nowstr.'&target=table';
-    print $urlString;
     wq($urlString)->find('tr')
     ->each(sub { 
         my ($i,$elem)= @_;
@@ -78,8 +51,6 @@ sub getAkijikan{
         push(@array,$key);
     };
 return \@array;
-#    print $fh Dumper(\@array);
-#    close $fh;
 }
 
 return 1;
